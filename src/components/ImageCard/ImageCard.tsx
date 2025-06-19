@@ -1,6 +1,13 @@
 import css from "./ImageCard.module.css";
 
-export default function ImageCard({ data, onClick }) {
+import { ImageData } from "../../types";
+
+interface ImageCardProps {
+  data: ImageData;
+  onClick: (image: ImageData) => void;
+}
+
+export default function ImageCard({ data, onClick }: ImageCardProps) {
   return (
     <li className={css.imageItem} onClick={() => onClick(data)}>
       <img
