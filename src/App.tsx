@@ -8,19 +8,21 @@ import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "./components/ImageModal/ImageModal";
 
+import type { ImageData } from "./types";
+
 export default function App() {
-  const [result, setResult] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [result, setResult] = useState<ImageData[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
 
-  const [topik, setTopik] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
+  const [topik, setTopik] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [hasMore, setHasMore] = useState<boolean>(true);
 
-  const [modalIsOpen, setIsOpen] = useState(false);
-  const [img, setImg] = useState(null);
+  const [modalIsOpen, setIsOpen] = useState<boolean>(false);
+  const [img, setImg] = useState<ImageData | null>(null);
 
-  function openModal(image) {
+  function openModal(image: ImageData) {
     setImg(image);
     setIsOpen(true);
   }
@@ -30,7 +32,7 @@ export default function App() {
     setIsOpen(false);
   }
 
-  const handleSearch = async (newImages) => {
+  const handleSearch = async (newImages: string) => {
     setTopik(newImages);
     setCurrentPage(1);
     setResult([]);
@@ -45,11 +47,11 @@ export default function App() {
       return;
     }
 
-    async function fetchImages() {
+    async function fetchImages(): Promise<void> {
       try {
         setError(false);
         setLoading(true);
-        const newTopik = await fetchImagesApi(topik, currentPage);
+        const newTopik: ImageData[] = await fetchImagesApi(topik, currentPage);
         setResult((prevTopik) => [...prevTopik, ...newTopik]);
         setHasMore(newTopik.length > 0);
       } catch {
