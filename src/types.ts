@@ -5,5 +5,6 @@ export interface ImageData {
   // modalImageUrl?: string;
   urls: {
     small: string;
+    regular: string;
   };
 }
